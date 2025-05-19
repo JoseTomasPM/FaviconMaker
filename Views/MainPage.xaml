@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FaviconMaker.MainPage">
+
+
+
+    <Grid ColumnDefinitions="2*,3*,2*"
+          RowDefinitions="*"
+          Padding="10">
+
+        <!-- Iconos disponibles -->
+        <StackLayout Grid.Column="0"
+                     Spacing="10">
+            <Label Text="Iconos disponibles" 
+                   FontAttributes="Bold"
+                   FontSize="20"/>
+            <!-- Aquí irá la lista de íconos -->
+            <CollectionView x:Name="IconsCollection"
+                            SelectionMode="Single"
+                            ItemsSource="{Binding IconItems}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="5" Margin="2" Background="LightGray">
+                            <Label Text="{Binding Name}" />
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+
+        <!-- Vista previa -->
+        <StackLayout Grid.Column="1"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     Spacing="10">
+            <Label Text="Vista previa"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   HorizontalOptions="Center"/>
+
+            <!-- Aquí irá el canvas con SkiaSharp más adelante -->
+            <BoxView WidthRequest="150" HeightRequest="150"
+                     BackgroundColor="LightGray"/>
+        </StackLayout>
+
+        <!-- Personalización -->
+        <StackLayout Grid.Column="2"
+                     Spacing="10">
+            <Label Text="Personalización"
+                   FontAttributes="Bold"
+                   FontSize="20"/>
+            <Label Text="Color del fondo: (futuro)" />
+            <Label Text="Color del ícono: (futuro)" />
+        </StackLayout>
+
+    </Grid>
+
+
+
+
+</ContentPage>
