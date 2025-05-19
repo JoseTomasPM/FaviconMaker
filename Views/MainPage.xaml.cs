@@ -1,5 +1,6 @@
 ﻿using FaviconMaker.ViewModels;
-
+using SkiaSharp;
+using Svg.Skia;
 
 namespace FaviconMaker
 {
@@ -12,5 +13,11 @@ namespace FaviconMaker
         }
 
         
+        // TODO OnPaintIcon OnPaintSelectedIcon
+
+
+
+
+
     }
 }
