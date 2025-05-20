@@ -17,20 +17,20 @@
                    FontAttributes="Bold"
                    FontSize="20"/>
             <!-- Aquí irá la lista de íconos -->
-            <CollectionView ItemsSource="{Binding AvailableIcons}"
+            <CollectionView ItemsSource="{Binding IconItems}"
                 SelectionMode="Single"
                 SelectedItem="{Binding SelectedIcon}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border Padding="5" Margin="5" BackgroundColor="Gray">
-                            <VerticalStackLayout>
+                            <HorizontalStackLayout>
                                 <skia:SKCanvasView
                                     PaintSurface="OnPaintIcon"
                                     HeightRequest="50"
                                     WidthRequest="50"
                                     BindingContext="{Binding}" />
                                 <Label Text="{Binding Name}" FontSize="10" HorizontalOptions="Center" />
-                            </VerticalStackLayout>
+                            </HorizontalStackLayout>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -51,11 +51,9 @@
                    VerticalOptions="Center"
                    HorizontalOptions="Center"
                    HeightRequest="150"
-                   WidthRequest="150" />
+                   WidthRequest="150"
+                   x:Name="SelectedIconCanvas" />
             
-            
-            <BoxView WidthRequest="150" HeightRequest="150"
-                     BackgroundColor="LightGray"/>
         </StackLayout>
 
         <!-- Personalización -->

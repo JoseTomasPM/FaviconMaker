@@ -25,9 +25,12 @@ namespace FaviconMaker.ViewModels
                 {
                     _selectedIcon = value;
                     OnPropertyChanged();
+                    IconSelected?.Invoke();
                 }
             }
         }
+        public event Action IconSelected;
+
 
         public MainViewModel()
         {
