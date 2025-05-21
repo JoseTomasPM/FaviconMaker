@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using FaviconMaker.Models;
 using System.Reflection;
+using SkiaSharp;
 
 namespace FaviconMaker.ViewModels
 {
@@ -30,6 +31,34 @@ namespace FaviconMaker.ViewModels
             }
         }
         public event Action IconSelected;
+
+        private SKColor _backgroundColor = SKColors.White;
+
+        public SKColor BackgroundColor
+        {
+            get => _backgroundColor;
+            set
+            {
+                _backgroundColor = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        private SKColor _iconColor = SKColors.White;
+
+        public SKColor IconColor
+        {
+            get => _iconColor;
+            set
+            {
+                _iconColor = value;
+                OnPropertyChanged();
+            }
+        }
+
+
 
 
         public MainViewModel()

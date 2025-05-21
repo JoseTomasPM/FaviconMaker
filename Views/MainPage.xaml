@@ -57,14 +57,27 @@
         </StackLayout>
 
         <!-- Personalización -->
-        <StackLayout Grid.Column="2"
-                     Spacing="10">
-            <Label Text="Personalización"
-                   FontAttributes="Bold"
-                   FontSize="20"/>
-            <Label Text="Color del fondo: (futuro)" />
-            <Label Text="Color del ícono: (futuro)" />
+        <StackLayout Grid.Column="2" Padding="10" Spacing="20">
+            <Label Text="Background Color" />
+            <Entry
+                Placeholder="#FFF"
+                x:Name="BackgroundColorHex"               
+                TextChanged="OnColorChangedHex"/>
+            <Slider Minimum="0" Maximum="1" x:Name="BackgroundRed" ValueChanged="OnColorChanged"/>
+            <Slider Minimum="0" Maximum="1" x:Name="BackgroundGreen" ValueChanged="OnColorChanged"/>
+            <Slider Minimum="0" Maximum="1" x:Name="BackgroundBlue" ValueChanged="OnColorChanged"/>
+
+            <Entry
+                Placeholder="#FFF"
+                x:Name="IconColorHex"               
+                TextChanged="OnIconColorChangedHex"/>
+            
+            <Label Text="Icon Color" />
+            <Slider Minimum="0" Maximum="1" x:Name="IconRed" ValueChanged="OnColorChanged"/>
+            <Slider Minimum="0" Maximum="1" x:Name="IconGreen" ValueChanged="OnColorChanged"/>
+            <Slider Minimum="0" Maximum="1" x:Name="IconBlue" ValueChanged="OnColorChanged"/>
         </StackLayout>
+
 
     </Grid>
 
