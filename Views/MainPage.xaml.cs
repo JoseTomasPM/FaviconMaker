@@ -31,7 +31,6 @@ namespace FaviconMaker
         }
 
 
-        // TODO OnPaintIcon OnPaintSelectedIcon
 
         // Renderiza cada ícono en la lista
         void OnPaintIcon(object sender, SKPaintSurfaceEventArgs e)
@@ -55,7 +54,7 @@ namespace FaviconMaker
                     canvas.DrawPicture(svg.Picture, ref matrix);
 
                 }
-                DrawSvgFromResource(icon.FilePath, e.Surface.Canvas, 30, 30);
+                //DrawSvgFromResource(icon.FilePath, e.Surface.Canvas, 30, 30);
             }
         }
 
@@ -179,6 +178,71 @@ namespace FaviconMaker
             }
         }
 
+
+        private async void OnExportPngClicked(object sender, EventArgs e)
+        {
+            if (_viewModel.SelectedIcon == null || string.IsNullOrEmpty(_viewModel.SelectedIcon.Name))
+            {
+                await DisplayAlert("Error", "No icon selected to export.", "OK");
+                return;
+            }
+
+            var surface = SKSurface.Create(new SKImageInfo(256, 256));
+            var canvas = surface.Canvas;
+            canvas.Clear(_viewModel.BackgroundColor);
+
+            if (!string.IsNullOrEmpty(_viewModel.SelectedIcon.FilePath))
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+                using var stream = assembly.GetManifestResourceStream(_viewModel.SelectedIcon.FilePath);
+                if (stream != null)
+                {
+                    var svg = new SKSvg();
+                    svg.Load(stream);
+
+                    var bounds = svg.Picture.CullRect;
+                    var scale = Math.Min(256f / bounds.Width, 256f / bounds.Height);
+                    var matrix = SKMatrix.CreateScale(scale, scale);
+
+                    using var paint = new SKPaint { ColorFilter = SKColorFilter.CreateBlendMode(_viewModel.IconColor, SKBlendMode.SrcIn) };
+                    canvas.DrawPicture(svg.Picture, ref matrix, paint);
+                }
+            }
+
+            var image = surface.Snapshot();
+            var data = image.Encode(SKEncodedImageFormat.Png, 100);
+            image.Dispose();
+            surface.Dispose();
+
+            string iconsMakerDir;
+
+#if ANDROID
+            var status = await Permissions.RequestAsync<Permissions.StorageWrite>();
+            if (status != PermissionStatus.Granted)
+            {
+                await DisplayAlert("Permiso requerido", "Se necesita permiso de almacenamiento para guardar el archivo.", "OK");
+                return;
+            }
+            var documentsPath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures).AbsolutePath;
+            iconsMakerDir = Path.Combine(documentsPath, "IconsMaker");
+#else
+            iconsMakerDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "IconsMaker");
+#endif
+
+            if (!Directory.Exists(iconsMakerDir))
+                Directory.CreateDirectory(iconsMakerDir);
+
+            var timestamp = DateTime.Now.ToString("ddMMyyyy_HHmmss");
+            var fileName = $"{_viewModel.SelectedIcon.Name}_{timestamp}.png";
+            var filePath = Path.Combine(iconsMakerDir, fileName);
+
+            using (var fileStream = File.Create(filePath))
+            {
+                data.SaveTo(fileStream);
+            }
+
+            await DisplayAlert("Icon saved on ", $"\n{filePath}", "OK");
+        }
 
 
 

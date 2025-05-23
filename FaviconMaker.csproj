@@ -59,24 +59,12 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
-	<!--
-	<ItemGroup>
-	  <None Remove="Resources\Icons\home.svg" />
-	  <None Remove="Resources\Icons\menu.svg" />
-	  <None Remove="Resources\Icons\search.svg" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Include="Resources\Icons\home.svg" />
-	  <EmbeddedResource Include="Resources\Icons\menu.svg" />
-	  <EmbeddedResource Include="Resources\Icons\search.svg" />
-	</ItemGroup> 
-	-->
-
-	<ItemGroup>
-		<EmbeddedResource Include="Resources\Icons\*.svg" />
-	</ItemGroup>
 	
+	
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Icons\*.svg" />
+	</ItemGroup>
+
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
@@ -87,6 +75,18 @@
 
 	<ItemGroup>
 	  <Folder Include="Services\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Resources\Icons\home.svg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Resources\Icons\menu.svg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Resources\Icons\search.svg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

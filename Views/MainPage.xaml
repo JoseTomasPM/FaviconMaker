@@ -50,14 +50,18 @@
             <skia:SKCanvasView PaintSurface="OnPaintSelectedIcon"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"
-                   HeightRequest="150"
-                   WidthRequest="150"
+                   HeightRequest="450"
+                   WidthRequest="450"
                    x:Name="SelectedIconCanvas" />
             
         </StackLayout>
 
         <!-- Personalización -->
         <StackLayout Grid.Column="2" Padding="10" Spacing="20">
+
+            <Button Text="Download PNG" Clicked="OnExportPngClicked"/>
+
+
             <Label Text="Background Color" />
             <Entry
                 Placeholder="#FFF"
