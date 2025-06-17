@@ -14,6 +14,9 @@ namespace FaviconMaker
     {
 
         private MainViewModel _viewModel;
+        private SKBitmap? _spectrumBitmap;
+
+
 
         public MainPage()
         {
@@ -104,21 +107,6 @@ namespace FaviconMaker
         }
 
 
-        private void OnColorChanged(object sender, ValueChangedEventArgs e)
-        {
-            _viewModel.BackgroundColor = new SKColor(
-                (byte)(BackgroundRed.Value * 255),
-                (byte)(BackgroundGreen.Value * 255),
-                (byte)(BackgroundBlue.Value * 255));
-
-            _viewModel.IconColor = new SKColor(
-                (byte)(IconRed.Value * 255),
-                (byte)(IconGreen.Value * 255),
-                (byte)(IconBlue.Value * 255));
-
-            SelectedIconCanvas?.InvalidateSurface();
-        }
-
         private void OnColorChangedHex(object sender, TextChangedEventArgs e)
         {
             var hex = e.NewTextValue?.Trim();
@@ -134,13 +122,11 @@ namespace FaviconMaker
                     var skColor = new SKColor(
                         (byte)(color.Red * 255),
                         (byte)(color.Green * 255),
-                        (byte)(color.Blue * 255));
+                        (byte)(color.Blue * 255),
+                        (byte)(color.Alpha * 255));
 
                     _viewModel.BackgroundColor = skColor;
 
-                    BackgroundRed.Value = color.Red;
-                    BackgroundGreen.Value = color.Green;
-                    BackgroundBlue.Value = color.Blue;
 
                     SelectedIconCanvas?.InvalidateSurface();
                 }
@@ -164,13 +150,10 @@ namespace FaviconMaker
                     var skColor = new SKColor(
                         (byte)(color.Red * 255),
                         (byte)(color.Green * 255),
-                        (byte)(color.Blue * 255));
+                        (byte)(color.Blue * 255),
+                        (byte)(color.Alpha *255));
 
                     _viewModel.IconColor = skColor;
-
-                    IconRed.Value = color.Red;
-                    IconGreen.Value = color.Green;
-                    IconBlue.Value = color.Blue;
 
                     SelectedIconCanvas?.InvalidateSurface();
                 }
@@ -243,6 +226,55 @@ namespace FaviconMaker
 
             await DisplayAlert("Icon saved on ", $"\n{filePath}", "OK");
         }
+
+
+
+        private void ColorPicker_PikedColorChangedBackground(object sender, EventArgs e)
+        {
+            var selectedColor = ColorPickerBackground.PickedColor;
+
+            if (selectedColor != null)
+            {
+                var skColor = new SKColor(
+                    (byte)(selectedColor.Red * 255),
+                    (byte)(selectedColor.Green * 255),
+                    (byte)(selectedColor.Blue * 255),
+                    (byte)(selectedColor.Alpha * 255));
+
+                _viewModel.BackgroundColor = skColor;
+                BackgroundColorHex.Text = selectedColor.ToHex(); 
+                SelectedIconCanvas?.InvalidateSurface();
+            }
+        }
+        private void ColorPicker_PikedColorChangedIcon(object sender, EventArgs e)
+        {
+            var selectedColor = ColorPickerIcon.PickedColor;
+
+            if (selectedColor != null)
+            {
+                var skColor = new SKColor(
+                    (byte)(selectedColor.Red * 255),
+                    (byte)(selectedColor.Green * 255),
+                    (byte)(selectedColor.Blue * 255),
+                    (byte)(selectedColor.Alpha * 255));
+
+                _viewModel.IconColor = skColor;
+                IconColorHex.Text = selectedColor.ToHex(); 
+                SelectedIconCanvas?.InvalidateSurface();
+            }
+        }
+
+
+        private string ColorToHex(Color color)
+        {
+            return $"#{(int)(color.Red * 255):X2}{(int)(color.Green * 255):X2}{(int)(color.Blue * 255):X2}";
+        }
+
+
+
+
+
+
 
 
 

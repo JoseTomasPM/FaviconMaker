@@ -2,24 +2,28 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+             xmlns:controls="clr-namespace:Maui.ColorPicker;assembly=Maui.ColorPicker"
              x:Class="FaviconMaker.MainPage">
 
 
 
-    <Grid ColumnDefinitions="2*,3*,2*"
+    <Grid ColumnDefinitions="*,2*,*"
           RowDefinitions="*"
-          Padding="10">
+          Padding="20">
 
         <!-- Iconos disponibles -->
         <StackLayout Grid.Column="0"
+                     Grid.Row="0"
                      Spacing="10">
-            <Label Text="Iconos disponibles" 
+            <Label Text="Icons" 
                    FontAttributes="Bold"
                    FontSize="20"/>
             <!-- Aquí irá la lista de íconos -->
             <CollectionView ItemsSource="{Binding IconItems}"
                 SelectionMode="Single"
-                SelectedItem="{Binding SelectedIcon}">
+                SelectedItem="{Binding SelectedIcon}"
+                HorizontalOptions="Start"
+                VerticalOptions="FillAndExpand">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border Padding="5" Margin="5" BackgroundColor="Gray">
@@ -38,7 +42,8 @@
         </StackLayout>
 
         <!-- Vista previa -->
-        <StackLayout Grid.Column="1"
+        <StackLayout Grid.Column="1"                     
+                     Grid.Row="0"
                      HorizontalOptions="Center"
                      VerticalOptions="Center"
                      Spacing="10">
@@ -57,29 +62,54 @@
         </StackLayout>
 
         <!-- Personalización -->
-        <StackLayout Grid.Column="2" Padding="10" Spacing="20">
+        <StackLayout Grid.Column="2" 
+                     Grid.Row="0" 
+                     Padding="10" 
+                     Spacing="20">
 
             <Button Text="Download PNG" Clicked="OnExportPngClicked"/>
 
+            
 
             <Label Text="Background Color" />
             <Entry
                 Placeholder="#FFF"
                 x:Name="BackgroundColorHex"               
                 TextChanged="OnColorChangedHex"/>
-            <Slider Minimum="0" Maximum="1" x:Name="BackgroundRed" ValueChanged="OnColorChanged"/>
-            <Slider Minimum="0" Maximum="1" x:Name="BackgroundGreen" ValueChanged="OnColorChanged"/>
-            <Slider Minimum="0" Maximum="1" x:Name="BackgroundBlue" ValueChanged="OnColorChanged"/>
 
+            <!--Color piker background-->
+            
+                <controls:ColorPicker
+                    x:Name="ColorPickerBackground"
+                    HeightRequest="150"
+                    WidthRequest="300"
+                    ColorFlowDirection="Horizontal"
+                    ColorSpectrumStyle="ShadeToHueStyle"
+                    PickedColorChanged="ColorPicker_PikedColorChangedBackground"
+                    PointerRingBorderUnits="0.1"
+                    PointerRingDiameterUnits="0.4" />
+            
+
+
+
+
+            <Label Text="Icon Color" />
             <Entry
                 Placeholder="#FFF"
                 x:Name="IconColorHex"               
                 TextChanged="OnIconColorChangedHex"/>
-            
-            <Label Text="Icon Color" />
-            <Slider Minimum="0" Maximum="1" x:Name="IconRed" ValueChanged="OnColorChanged"/>
-            <Slider Minimum="0" Maximum="1" x:Name="IconGreen" ValueChanged="OnColorChanged"/>
-            <Slider Minimum="0" Maximum="1" x:Name="IconBlue" ValueChanged="OnColorChanged"/>
+
+
+            <controls:ColorPicker
+                x:Name="ColorPickerIcon"
+                HeightRequest="150"
+                WidthRequest="300"
+                ColorFlowDirection="Horizontal"
+                ColorSpectrumStyle="ShadeToHueStyle"
+                PickedColorChanged="ColorPicker_PikedColorChangedIcon"
+                PointerRingBorderUnits="0.1"                
+                PointerRingDiameterUnits="0.4" />
+
         </StackLayout>
 
 
