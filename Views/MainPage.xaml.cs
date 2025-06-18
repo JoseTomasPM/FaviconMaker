@@ -1,11 +1,12 @@
-﻿using FaviconMaker.ViewModels;
+﻿using FaviconMaker.Models;
+using FaviconMaker.ViewModels;
+using Microsoft.Maui.Hosting;
 using SkiaSharp;
 using SkiaSharp.Views;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
 using Svg.Skia;
 using System.Reflection;
-using FaviconMaker.Models;
 
 
 namespace FaviconMaker
@@ -83,6 +84,8 @@ namespace FaviconMaker
                     // Recolorea todo a iconColor
                     using var paint = new SKPaint { ColorFilter = SKColorFilter.CreateBlendMode(_viewModel.IconColor, SKBlendMode.SrcIn) };
                     canvas.DrawPicture(svg.Picture, ref matrix, paint);
+                    // icon expander
+                    IconExpander.IsExpanded = !IconExpander.IsExpanded;
                 }
             }
         }
@@ -272,9 +275,10 @@ namespace FaviconMaker
 
 
 
-
-
-
+        private void ToggleIconPanel(object sender, EventArgs e)
+        {
+            IconExpander.IsExpanded = !IconExpander.IsEnabled;
+        }
 
 
 
